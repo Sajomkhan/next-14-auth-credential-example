@@ -8,9 +8,9 @@ async function login(credentials) {
   try {
     connectDB();
     const user = await User.findOne({ email: credentials.email });
-    if (!user) throw new Error("wrong Credentials.");
+    if (!user) throw new Error("Wrong Credentials.");
     const isCorrect = await bcrypt.compare(credentials.password, user.password);
-    if (!isCorrect) throw new Error("wrong Credentials.");
+    if (!isCorrect) throw new Error("Wrong Credentials.");
     return user;
   } catch (error) {
     console.log("error while logging in", error);
@@ -24,14 +24,14 @@ export const authOptions = {
   },
   providers: [
     CredentialsProvider({
-      name: "credentials",
+      name: "Credentials",
       credentials: {},
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         try {
           const user = await login(credentials);
+          console.log(credentials);
           return user;
           // console.log("user:", user);
-          console.log(credentials);
         } catch (error) {
           console.log("Failed to login. ", error);
         }
@@ -46,7 +46,6 @@ export const authOptions = {
         token.email = user.email;
         token.id = user.id;
       }
-      console.log("token: ", token);
       return token;
     },
     // Put the token info in to the session

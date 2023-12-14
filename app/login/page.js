@@ -129,7 +129,7 @@ export default function LoginPage() {
             className="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
             disabled={pending ? true : false}
           >
-            {pending ? "Wait for Sign in" : "Sing in"}
+            {pending ? "Wait..." : "Sing in"}
           </button>
         </div>
       </form>
